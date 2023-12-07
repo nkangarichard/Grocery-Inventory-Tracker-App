@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddStockFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+
+
+      <TextView
+          android:id="@+id/textView"
+          android:layout_width="233dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="89dp"
+          android:layout_marginTop="89dp"
+          android:layout_marginEnd="89dp"
+          android:text="Add Stock"
+          android:textAlignment="center"
+          android:textColor="#FFFFFF"
+          android:textSize="25sp"
+          android:textStyle="bold"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:ignore="TextSizeCheck" />
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/itemNameLayout"
+          android:layout_width="350dp"
+          android:layout_height="65dp"
+          android:layout_marginStart="30dp"
+          android:layout_marginTop="15dp"
+          android:layout_marginEnd="30dp"
+          android:hint="Item Name"
+          android:textColorHint="@color/white"
+          app:boxBackgroundColor="@color/grey_black"
+          app:boxBackgroundMode="filled"
+          app:boxCollapsedPaddingTop="8dp"
+          app:boxCornerRadiusBottomEnd="10dp"
+          app:boxCornerRadiusBottomStart="10dp"
+          app:boxCornerRadiusTopEnd="10dp"
+          app:boxCornerRadiusTopStart="10dp"
+          app:boxStrokeColor="@color/white"
+          app:boxStrokeWidth="0dp"
+          app:boxStrokeWidthFocused="0dp"
+          app:cursorColor="@color/light_yellow"
+          app:hintTextColor="@color/white"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+          <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/edItemName"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:inputType="text"
+              android:textColor="@color/white"
+              android:textColorHighlight="@color/white"
+              android:textColorHint="@color/white"
+              tools:ignore="TextContrastCheck" />
+
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/quantityLayout"
+          android:layout_width="350dp"
+          android:layout_height="65dp"
+          android:layout_marginStart="30dp"
+          android:layout_marginTop="15dp"
+          android:layout_marginEnd="30dp"
+          android:hint="Quantity"
+          android:textColorHint="@color/white"
+          app:boxBackgroundColor="@color/grey_black"
+          app:boxBackgroundMode="filled"
+          app:boxCollapsedPaddingTop="8dp"
+          app:boxCornerRadiusBottomEnd="10dp"
+          app:boxCornerRadiusBottomStart="10dp"
+          app:boxCornerRadiusTopEnd="10dp"
+          app:boxCornerRadiusTopStart="10dp"
+          app:boxStrokeColor="@color/white"
+          app:boxStrokeWidth="0dp"
+          app:boxStrokeWidthFocused="0dp"
+          app:cursorColor="@color/light_yellow"
+          app:hintTextColor="@color/white"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/itemNameLayout">
+
+
+          <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/edQuantity"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:inputType="textEmailAddress"
+              android:textColor="@color/white"
+              android:textColorHighlight="@color/white"
+              android:textColorHint="@color/white"
+              tools:ignore="TextContrastCheck" />
+
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/priceLayout"
+          android:layout_width="350dp"
+          android:layout_height="65dp"
+          android:layout_marginStart="30dp"
+          android:layout_marginTop="15dp"
+          android:layout_marginEnd="30dp"
+          android:hint="Price"
+          android:textColorHint="@color/white"
+          app:boxBackgroundColor="@color/grey_black"
+          app:boxBackgroundMode="filled"
+          app:boxCollapsedPaddingTop="8dp"
+          app:boxCornerRadiusBottomEnd="10dp"
+          app:boxCornerRadiusBottomStart="10dp"
+          app:boxCornerRadiusTopEnd="10dp"
+          app:boxCornerRadiusTopStart="10dp"
+          app:boxStrokeColor="@color/white"
+          app:boxStrokeWidth="0dp"
+          app:boxStrokeWidthFocused="0dp"
+          app:cursorColor="@color/light_yellow"
+          app:hintTextColor="@color/white"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/quantityLayout">
+
+
+          <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/edPrice"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:inputType="textPassword"
+              android:textColor="@color/white"
+              android:textColorHighlight="@color/white"
+              android:textColorHint="@color/white"
+              tools:ignore="TextContrastCheck" />
+
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+
+      <RadioGroup
+          android:id="@+id/rgTaxStatus"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="92dp"
+          android:layout_marginTop="28dp"
+          android:layout_marginEnd="92dp"
+          android:orientation="horizontal"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/priceLayout">
+
+          <RadioButton
+              android:id="@+id/rbTaxable"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Taxable"
+              android:textColor="@color/white"
+              android:textSize="18dp" />
+
+          <RadioButton
+              android:id="@+id/rbNonTaxable"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="NonTaxable"
+              android:textColor="@color/white"
+              android:textSize="18dp"
+              android:layout_marginStart="60dp"/>
+
+
+      </RadioGroup>
+
+      <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/btnSignUp"
+          android:layout_width="300dp"
+          android:layout_height="50dp"
+          android:layout_marginStart="55dp"
+          android:layout_marginTop="67dp"
+          android:layout_marginEnd="56dp"
+          android:background="@drawable/custom_button"
+          android:text="@string/sign_up"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/rgTaxStatus"
+          tools:ignore="TextContrastCheck" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

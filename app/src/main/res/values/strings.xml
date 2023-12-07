@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">RNGrocery</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account_click_here">Don\'t have an account? Click here</string>
+    <string name="password">Password</string>
+    <string name="sign_in_with_your_account">Sign in with your account</string>
+    <string name="username">Username</string>
+    <string name="already_have_an_account_click_here">Already have an account? Click here</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="sign_up_for_an_account">Sign up for an account</string>
+    <string name="welcome">Welcome,</string>
+    <string name="user">User</string>
+
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="integrated_sqlite_database_for_seamless_tracking_and_management_of_items">Integrated SQLite database for seamless tracking and management of items.</string>
+    <string name="grocery_tracker">Grocery Tracker</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

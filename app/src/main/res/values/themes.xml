@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RNGrocery" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="colorPrimary">@color/grey_black</item>
+        <item name="android:colorBackground">@color/light_black</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:statusBarColor">@color/light_black</item>
+
+    </style>
+
+    <style name="Theme.RNGrocery" parent="Base.Theme.RNGrocery" />
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="ThemeOverlay.AppCompat.navTheme" >
+        <item name="colorPrimary">@color/white</item>
+    </style>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/warehouse"
+    android:gravity="bottom"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/grocery_tracker"
+        android:textSize="40dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/integrated_sqlite_database_for_seamless_tracking_and_management_of_items"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="normal"
+        tools:ignore="SpUsage,TextSizeCheck" />
+
+</LinearLayout>
