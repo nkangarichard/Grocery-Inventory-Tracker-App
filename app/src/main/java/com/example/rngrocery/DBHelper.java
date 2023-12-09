@@ -164,8 +164,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return count > 0;
     }
 
-
-
     // method to check if a username exists in the database
     public boolean checkUsernameExists(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -216,6 +214,24 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
 
         return emailExists;
+    }
+
+
+    public boolean insertStock(Stock stock) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_ITEM_NAME, stock.getStockName());
+        cv.put(COL_QTY_STOCK, stock.getQuantity());
+        cv.put(COL_PRICE, stock.getPrice());
+
+
+        // Convert boolean to integer representation
+        int taxableInt = stock.isTaxable() ? 1 : 0;
+        cv.put(COL_TAXABLE, taxableInt);
+
+
+        long newRowId = db.insert(DBHelper.TABLE_STOCK, null, cv);
+        return  ((newRowId==-1) ? false : true);
     }
 
 
