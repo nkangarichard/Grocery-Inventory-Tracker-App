@@ -8,19 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.rngrocery.databinding.FragmentAddStockBinding;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddStockFragment#newInstance} factory method to
+ * Use the {@link SalesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddStockFragment extends Fragment {
-
-
-    FragmentAddStockBinding fragmentAddStockBinding;
-
-
+public class SalesFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +24,7 @@ public class AddStockFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AddStockFragment() {
+    public SalesFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +34,11 @@ public class AddStockFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddStockFragment.
+     * @return A new instance of fragment SalesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddStockFragment newInstance(String param1, String param2) {
-        AddStockFragment fragment = new AddStockFragment();
+    public static SalesFragment newInstance(String param1, String param2) {
+        SalesFragment fragment = new SalesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,8 +59,6 @@ public class AddStockFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        fragmentAddStockBinding = FragmentAddStockBinding.inflate(inflater, container, false);
-        View view = fragmentAddStockBinding.getRoot();
-        return view;
+        return inflater.inflate(R.layout.fragment_sales, container, false);
     }
 }

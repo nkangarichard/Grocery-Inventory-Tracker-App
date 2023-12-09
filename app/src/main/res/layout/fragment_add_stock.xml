@@ -12,15 +12,14 @@
       android:layout_height="match_parent">
 
 
-
       <TextView
           android:id="@+id/textView"
           android:layout_width="233dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="89dp"
-          android:layout_marginTop="89dp"
+          android:layout_marginTop="40dp"
           android:layout_marginEnd="89dp"
-          android:text="Add Stock"
+          android:text="@string/add_stock"
           android:textAlignment="center"
           android:textColor="#FFFFFF"
           android:textSize="25sp"
@@ -37,7 +36,7 @@
           android:layout_marginStart="30dp"
           android:layout_marginTop="15dp"
           android:layout_marginEnd="30dp"
-          android:hint="Item Name"
+          android:hint="@string/item_name"
           android:textColorHint="@color/white"
           app:boxBackgroundColor="@color/grey_black"
           app:boxBackgroundMode="filled"
@@ -77,7 +76,7 @@
           android:layout_marginStart="30dp"
           android:layout_marginTop="15dp"
           android:layout_marginEnd="30dp"
-          android:hint="Quantity"
+          android:hint="@string/quantity"
           android:textColorHint="@color/white"
           app:boxBackgroundColor="@color/grey_black"
           app:boxBackgroundMode="filled"
@@ -116,7 +115,7 @@
           android:layout_marginStart="30dp"
           android:layout_marginTop="15dp"
           android:layout_marginEnd="30dp"
-          android:hint="Price"
+          android:hint="@string/price"
           android:textColorHint="@color/white"
           app:boxBackgroundColor="@color/grey_black"
           app:boxBackgroundMode="filled"
@@ -164,19 +163,23 @@
           <RadioButton
               android:id="@+id/rbTaxable"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Taxable"
-              android:textColor="@color/white"
-              android:textSize="18dp" />
-
-          <RadioButton
-              android:id="@+id/rbNonTaxable"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="NonTaxable"
+              android:layout_height="48dp"
+              android:text="@string/taxable"
               android:textColor="@color/white"
               android:textSize="18dp"
-              android:layout_marginStart="60dp"/>
+              android:theme="@style/RadioButtonStyle"
+              tools:ignore="SpUsage,TextSizeCheck" />
+
+          <androidx.appcompat.widget.AppCompatRadioButton
+              android:id="@+id/rbNonTaxable"
+              android:layout_width="match_parent"
+              android:layout_height="48dp"
+              android:layout_marginStart="60dp"
+              android:text="@string/nontaxable"
+              android:textColor="@color/white"
+              android:textSize="18dp"
+              android:theme="@style/RadioButtonStyle"
+              tools:ignore="SpUsage,TextSizeCheck" />
 
 
       </RadioGroup>
@@ -210,7 +213,7 @@
               android:layout_marginStart="20dp"
               android:layout_marginEnd="50dp"
               android:background="@drawable/custom_cancel_button"
-              android:text="Cancel"
+              android:text="@string/cancel"
               app:layout_constraintEnd_toEndOf="parent"
               tools:ignore="TextContrastCheck"
               tools:layout_editor_absoluteY="506dp" />

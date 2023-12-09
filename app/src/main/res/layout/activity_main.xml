@@ -72,7 +72,7 @@
             app:menu="@menu/navigation_menu"
             app:headerLayout="@layout/header"
             android:theme="@style/ThemeOverlay.AppCompat.navTheme"
-            />
+            tools:ignore="VisualLintBounds" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
