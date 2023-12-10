@@ -3,7 +3,9 @@ package com.example.rngrocery;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,9 @@ public class LoginScreen extends AppCompatActivity {
 
     // Flag to check if the test user has been inserted
      Boolean testUserInserted;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +71,15 @@ public class LoginScreen extends AppCompatActivity {
                         // Login successful, navigate to the main activity
                         Toast.makeText(LoginScreen.this, "Login successful", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginScreen.this, MainActivity.class);
-                        intent.putExtra("userName", userName.getText().toString().trim());
+
+
+                        SharedPreferences preferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("userName", userName.getText().toString().trim());
+                        editor.commit();
+
                         startActivity(intent);
+
                     } else {
                         // User credentials are not valid, show an error message
                         Toast.makeText(LoginScreen.this, "Invalid username or password", Toast.LENGTH_LONG).show();

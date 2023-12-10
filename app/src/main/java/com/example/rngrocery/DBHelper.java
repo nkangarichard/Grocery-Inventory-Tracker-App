@@ -110,9 +110,9 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(COL_PASSWORD, objEmp.getPassword());
 
 
-        long newRowId = db.insert(DBHelper.TABLE_USER, null, cv);
+        long userRowId = db.insert(DBHelper.TABLE_USER, null, cv);
 
-        return  ((newRowId==-1) ? false : true);
+        return  ((userRowId==-1) ? false : true);
 
     }
 
@@ -217,6 +217,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+
     public boolean insertStock(Stock stock) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -230,9 +231,251 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(COL_TAXABLE, taxableInt);
 
 
-        long newRowId = db.insert(DBHelper.TABLE_STOCK, null, cv);
-        return  ((newRowId==-1) ? false : true);
+        long stockRowId = db.insert(DBHelper.TABLE_STOCK, null, cv);
+        return  ((stockRowId==-1) ? false : true);
     }
+
+    public boolean stockExists(String itemName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define the columns you want to retrieve
+        String[] projection = {DBHelper. COL_ITEM_NAME};
+
+        // Specify the WHERE clause
+        String selection = DBHelper.COL_ITEM_NAME + " = ?";
+        String[] selectionArgs = {String.valueOf(itemName)};
+
+        // Query the Stock table
+        Cursor cursor = db.query(
+                DBHelper.TABLE_STOCK,   // The table to query
+                projection,                         // The columns to return
+                selection,                          // The columns for the WHERE clause
+                selectionArgs,                      // The values for the WHERE clause
+                null,                               // Don't group the rows
+                null,                               // Don't filter by row groups
+                null                                // The sort order
+        );
+
+        // Check if there are any rows returned
+        boolean exists = cursor.moveToFirst();
+
+        // Close the cursor and database
+        cursor.close();
+        db.close();
+
+        return exists;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public boolean insertSale(Sales sales) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_ITEM_CODE, sales.getItemCode());
+        cv.put(COL_CUSTOMER_NAME, sales.getCustomerName());
+        cv.put(COL_CUSTOMER_EMAIL, sales.getCustomerEmail());
+        cv.put(COL_QTY_SOLD, sales.getQtySold());
+        cv.put(COL_DATE_SALES, sales.getDateOfSales().getTime());
+
+
+        // Convert boolean to integer representation
+        long salesRowId = db.insert(DBHelper.TABLE_SALES, null, cv);
+        return  ((salesRowId==-1) ? false : true);
+
+
+    }
+
+    public boolean isItemCodeExistsInStock(int itemCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define the columns you want to retrieve
+        String[] projection = {DBHelper. COL_ITEM_CODE};
+
+        // Specify the WHERE clause
+        String selection = DBHelper.COL_ITEM_CODE + " = ?";
+        String[] selectionArgs = {String.valueOf(itemCode)};
+
+        // Query the Stock table
+        Cursor cursor = db.query(
+                DBHelper.TABLE_STOCK,   // The table to query
+                projection,                         // The columns to return
+                selection,                          // The columns for the WHERE clause
+                selectionArgs,                      // The values for the WHERE clause
+                null,                               // Don't group the rows
+                null,                               // Don't filter by row groups
+                null                                // The sort order
+        );
+
+        // Check if there are any rows returned
+        boolean exists = cursor.moveToFirst();
+
+        // Close the cursor and database
+        cursor.close();
+        db.close();
+
+        return exists;
+    }
+
+
+
+    public int getStockQuantity(int itemCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define the columns you want to retrieve
+        String[] projection = {COL_QTY_STOCK};
+
+        // Specify the WHERE clause
+        String selection = COL_ITEM_CODE + " = ?";
+        String[] selectionArgs = {String.valueOf(itemCode)};
+
+        // Query the Stock table
+        Cursor cursor = db.query(
+                TABLE_STOCK,    // The table to query
+                projection,     // The columns to return
+                selection,      // The columns for the WHERE clause
+                selectionArgs,  // The values for the WHERE clause
+                null,           // Don't group the rows
+                null,           // Don't filter by row groups
+                null            // The sort order
+        );
+
+        int stockQuantity = 0;
+
+        // Check if there are any rows returned
+        // Check if there are any rows returned
+        if (cursor.moveToFirst()) {
+            // Extract the quantity from the cursor
+            stockQuantity = cursor.getInt(cursor.getColumnIndexOrThrow(COL_QTY_STOCK));
+        }
+
+        // Close the cursor and database
+//        cursor.close();
+//        db.close();
+
+        return stockQuantity;
+    }
+
+
+
+
+
+    public boolean salesRecord(int itemCode, int soldQuantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        // Get the current quantity in the Stock table
+        int currentQuantity = getStockQuantity(itemCode);
+
+        // Define the new quantity after the sale
+        int newQuantity = currentQuantity - soldQuantity;
+
+        // Create content values to store the new quantity
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.COL_QTY_STOCK, newQuantity);
+
+        // Specify the WHERE clause
+        String selection = DBHelper.COL_ITEM_CODE + " = ?";
+        String[] selectionArgs = {String.valueOf(itemCode)};
+
+        // Update the Stock table
+        int rowsUpdated = db.update(
+                DBHelper.TABLE_STOCK,  // The table to update
+                values,                             // The new values to apply
+                selection,                          // The columns for the WHERE clause
+                selectionArgs                       // The values for the WHERE clause
+        );
+
+        // Close the database
+//        db.close();
+
+        return rowsUpdated > 0;
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    public boolean insertPurchase(Purchase purchase) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+
+        cv.put(COL_ITEM_CODE, purchase.getItemCode());
+        cv.put(COL_QTY_PURCHASED, purchase.getQtyPurchased());
+        cv.put(COL_DATE_PURCHASE, purchase.getDateOfPurchase().getTime()); // Assuming dateOfPurchase is a Date object
+
+
+        // Convert boolean to integer representation
+        long salesRowId = db.insert(DBHelper.TABLE_PURCHASE, null, cv);
+        return  ((salesRowId==-1) ? false : true);
+
+
+    }
+
+
+
+
+
+
+
+    public boolean purchaseRecord(int itemCode, int purchaseQuantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        // Get the current quantity in the Stock table
+        int currentQuantity = getStockQuantity(itemCode);
+
+        // Define the new quantity after the sale
+        int newQuantity = currentQuantity + purchaseQuantity;
+
+        // Create content values to store the new quantity
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.COL_QTY_STOCK, newQuantity);
+
+        // Specify the WHERE clause
+        String selection = DBHelper.COL_ITEM_CODE + " = ?";
+        String[] selectionArgs = {String.valueOf(itemCode)};
+
+        // Update the Stock table
+        int rowsUpdated = db.update(
+                DBHelper.TABLE_STOCK,  // The table to update
+                values,                             // The new values to apply
+                selection,                          // The columns for the WHERE clause
+                selectionArgs                       // The values for the WHERE clause
+        );
+
+        // Close the database
+//        db.close();
+
+        return rowsUpdated > 0;
+
+
+
+    }
+
+
+
+
+
+
+
+
 
 
 

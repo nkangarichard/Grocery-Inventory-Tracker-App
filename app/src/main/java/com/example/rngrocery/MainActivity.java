@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     ActionBarDrawerToggle mToggle;
-
+    DBHelper dbHelper;
     TextView displayUsername;
     FrameLayout fragmentContainer;
+    SharedPreferences sharedPreferences;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -47,19 +50,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         init();
 
+        dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        displayUsername = binding.dUsername;
+
+        displayUsername = binding.edUsername;
         fragmentContainer = binding.frame;
 
 
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String storedUserName = preferences.getString("userName", null);
 
+        displayUsername.setText(storedUserName);
 
-        // Retrieve data passed from the previous activity (MainActivity)
-        String receivedUserName = getIntent().getStringExtra("userName");
-
-
-        // Set the text of TextViews with received data
-        displayUsername.setText(receivedUserName);
 
     }
 
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         mToggle = new ActionBarDrawerToggle(this,binding.drawerLayout,binding.materialToolbar,R.string.nav_open,R.string.nav_close);
         binding.drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+        mToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
 
 
         setSupportActionBar(binding.materialToolbar);
@@ -91,7 +95,27 @@ public class MainActivity extends AppCompatActivity {
 
                 if (itemId == R.id.nav_add_stock ){
                     selectedFragment = new AddStockFragment();
+                } else if (itemId == R.id.nav_sales ){
+                    selectedFragment = new SalesFragment();
+                }else if (itemId == R.id.nav_purchase ){
+
+                }else if (itemId == R.id.nav_search_stock ){
+
+                }else if (itemId == R.id.nav_list_stock ){
+
+                }else if (itemId == R.id.nav_log_out ){
+
+
+                    SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear();
+
+
+                    Intent intent = new Intent(MainActivity.this, LoginScreen.class);
+                    startActivity(intent);
+
                 }
+
 
                 if (selectedFragment != null) {
                     getSupportFragmentManager().beginTransaction()

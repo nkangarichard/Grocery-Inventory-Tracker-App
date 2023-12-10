@@ -27,4 +27,13 @@
     <string name="taxable">Taxable</string>
     <string name="nontaxable">NonTaxable</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="submit">Submit</string>
+    <string name="quantity_sold">Quantity Sold</string>
+    <string name="customer_email">Customer Email</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="sales">Sales</string>
+    <string name="item_code">Item Code</string>
+    <string name="dd_mm_yy">dd / mm / yy</string>
+    <string name="list_of_stocks">List of Stocks</string>
 </resources>

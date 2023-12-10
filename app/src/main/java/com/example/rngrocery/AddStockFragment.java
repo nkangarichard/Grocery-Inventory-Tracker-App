@@ -1,5 +1,7 @@
 package com.example.rngrocery;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,17 +17,14 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.rngrocery.databinding.FragmentAddStockBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddStockFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddStockFragment extends Fragment implements  View.OnClickListener, RadioGroup.OnCheckedChangeListener {
-
-
-
-
+public class AddStockFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -44,7 +43,7 @@ public class AddStockFragment extends Fragment implements  View.OnClickListener,
     DBHelper dbHelper;
     Boolean insertStatus;
     boolean status;
-    Button save,cancel;
+    Button save, cancel;
     FragmentAddStockBinding addStockBinding;
 
     public AddStockFragment() {
@@ -79,26 +78,12 @@ public class AddStockFragment extends Fragment implements  View.OnClickListener,
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         addStockBinding = FragmentAddStockBinding.inflate(inflater, container, false);
         View view = addStockBinding.getRoot();
         init();
-
-
-
-
-
-
-
         return view;
-
-
-
-
-
-
 
     }
 
@@ -118,13 +103,9 @@ public class AddStockFragment extends Fragment implements  View.OnClickListener,
 
         // Set the click listener for the submit button
         save.setOnClickListener(this);
+        cancel.setOnClickListener(this);
 
         taxableStatus.setOnCheckedChangeListener(this);
-
-
-
-
-
 
 
     }
@@ -135,42 +116,78 @@ public class AddStockFragment extends Fragment implements  View.OnClickListener,
         // Check if the clicked view is the submit button
 
 
-        if (validateInput()){
+        if (v.getId() == cancel.getId()) {
+            Log.d("OnClick", "Cancel button clicked");
+            Intent intent = new Intent(requireActivity(), MainActivity.class);
+            startActivity(intent);
+
+
+        } else if (validateInput()) {
             if (v.getId() == save.getId()) {
-
-
-                Log.e("erororororoor", "onClick:Button tapped");
-
-
-
-
-
 
                 String sItemName = itemName.getText().toString();
                 Integer sQuantity = Integer.parseInt(quantity.getText().toString());
                 Double sPrice = Double.parseDouble(price.getText().toString());
                 Boolean taxable = status;
 
-                Stock stock = new Stock(sItemName,sQuantity,sPrice,taxable);
-
-                insertStatus = dbHelper.insertStock(stock);
+                Stock stock = new Stock(sItemName, sQuantity, sPrice, taxable);
 
 
+                boolean itemExists = dbHelper.stockExists(sItemName.toLowerCase());
 
 
+                if (itemExists) {
+                    new MaterialAlertDialogBuilder(requireActivity()).setTitle("failed").setMessage("Item Already Exists ").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // User clicked OK button
+                                }
+                            })
 
-                // Display a toast message based on the insertion result
-                if (insertStatus) {
-//                    Toast.makeText(getActivity(), " record added successfully", Toast.LENGTH_LONG).show();
-                    Toast.makeText(getActivity(),status + " record added successfully", Toast.LENGTH_LONG).show();
+                            .show();
+
+
                 } else {
-                    Toast.makeText(getActivity(), "Record insertion failure", Toast.LENGTH_LONG).show();
+                    insertStatus = dbHelper.insertStock(stock);
+                    if (insertStatus) {
+                        new MaterialAlertDialogBuilder(requireActivity()).setTitle("Success").setMessage("Item Added Successfully ").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // User clicked OK button
+                                    }
+                                })
+
+                                .show();
+
+                    } else {
+                        new MaterialAlertDialogBuilder(requireActivity()).setTitle("Failed").setMessage("The item could not be added ").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // User clicked OK button
+                                    }
+                                })
+
+                                .show();
+                    }
                 }
+
+
             }
+
+
+        } else {
+
+            new MaterialAlertDialogBuilder(requireActivity()).setTitle("Validation Failed").setMessage("There is a problem with onne of the input fields ").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // User clicked OK button
+                        }
+                    })
+
+                    .show();
+
+
         }
-
-
-
 
 
     }
@@ -178,15 +195,12 @@ public class AddStockFragment extends Fragment implements  View.OnClickListener,
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         Log.e("CheckedChanged", "Checked changed. ID: " + checkedId);
-        if (checkedId == taxable.getId()){
+        if (checkedId == taxable.getId()) {
             status = true;
             Log.e("Tax Status", "Taxable");
 
 
-
-
-        }
-        else if(checkedId == nonTaxable.getId()){
+        } else if (checkedId == nonTaxable.getId()) {
             status = false;
             Log.e("Tax Status", "Non Taxable");
             Log.e("Tax Status", "Non Taxable" + status);
@@ -217,7 +231,6 @@ public class AddStockFragment extends Fragment implements  View.OnClickListener,
         }
 
 
-
         String priceStr = price.getText().toString().trim();
         if (priceStr.isEmpty()) {
             price.setError("Enter the price");
@@ -232,6 +245,14 @@ public class AddStockFragment extends Fragment implements  View.OnClickListener,
             return false;
         }
 
+
+        if (taxableStatus.getCheckedRadioButtonId() == -1) {
+
+            Toast.makeText(getContext(), "You have to have to select whether the the item is taxable or not  ".toString(), Toast.LENGTH_LONG).show();
+
+            return false;
+
+        }
 
 
         return true; // All input fields are valid

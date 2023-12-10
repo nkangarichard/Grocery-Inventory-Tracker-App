@@ -81,8 +81,8 @@ public class SignUpScreen extends AppCompatActivity {
                     User user = new User(uUsername, uEmail, uPassword);
 
                     // Check if user with the provided credentials exists in the database
-                    boolean usernameExists = dbHelper.checkUsernameExists(uUsername);
-                    boolean emailExists = dbHelper.checkEmailExists(uEmail);
+                    boolean usernameExists = dbHelper.checkUsernameExists(uUsername.toLowerCase());
+                    boolean emailExists = dbHelper.checkEmailExists(uEmail.toLowerCase());
                     // Insert the user into the database
 
 
