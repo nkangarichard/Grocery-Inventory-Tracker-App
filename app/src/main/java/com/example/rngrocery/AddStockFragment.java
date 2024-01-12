@@ -127,7 +127,7 @@ public class AddStockFragment extends Fragment implements View.OnClickListener, 
 
                 String sItemName = itemName.getText().toString();
                 Integer sQuantity = Integer.parseInt(quantity.getText().toString());
-                Double sPrice = Double.parseDouble(price.getText().toString());
+                float sPrice = Float.parseFloat(price.getText().toString());
                 Boolean taxable = status;
 
                 Stock stock = new Stock(sItemName, sQuantity, sPrice, taxable);
@@ -216,19 +216,19 @@ public class AddStockFragment extends Fragment implements View.OnClickListener, 
             return false;
         }
 
-        String quantityStr = quantity.getText().toString().trim();
-        if (quantityStr.isEmpty()) {
-            quantity.setError("Enter the quantity");
-            return false;
-        }
+            String quantityStr = quantity.getText().toString().trim();
+            if (quantityStr.isEmpty()) {
+                quantity.setError("Enter the quantity");
+                return false;
+            }
 
-        try {
-            int quantityValue = Integer.parseInt(quantityStr);
-            // Quantity is a valid integer
-        } catch (NumberFormatException e) {
-            quantity.setError("Enter a valid quantity (numeric)");
-            return false;
-        }
+            try {
+                int quantityValue = Integer.parseInt(quantityStr);
+                // Quantity is a valid integer
+            } catch (NumberFormatException e) {
+                quantity.setError("Enter a valid quantity (numeric)");
+                return false;
+            }
 
 
         String priceStr = price.getText().toString().trim();

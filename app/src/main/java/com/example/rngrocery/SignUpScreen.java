@@ -2,6 +2,7 @@ package com.example.rngrocery;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -12,11 +13,11 @@ import android.widget.Toast;
 
 import com.example.rngrocery.databinding.ActivityLoginScreenBinding;
 import com.example.rngrocery.databinding.ActivitySignUpScreenBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class SignUpScreen extends AppCompatActivity {
 
-
-    ActivitySignUpScreenBinding binding;// Binding object for the login screen activity layout
+    ActivitySignUpScreenBinding binding; // Binding object for the sign-up activity layout
 
     // UI elements
     EditText userName, email, password, cPassword;
@@ -34,15 +35,15 @@ public class SignUpScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Inflate the sign-up activity layout
         binding = ActivitySignUpScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
-
-        dbHelper = new DBHelper(this); // Initialize dbHelper
+        // Initialize dbHelper and open the writable database
+        dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
 
         // Insert the test user into the database
         testUserInserted = dbHelper.insertTestUser(db);
@@ -65,7 +66,6 @@ public class SignUpScreen extends AppCompatActivity {
             }
         });
 
-
         // Set click listener for the sign-up button
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,21 +83,36 @@ public class SignUpScreen extends AppCompatActivity {
                     // Check if user with the provided credentials exists in the database
                     boolean usernameExists = dbHelper.checkUsernameExists(uUsername.toLowerCase());
                     boolean emailExists = dbHelper.checkEmailExists(uEmail.toLowerCase());
+
                     // Insert the user into the database
-
-
-
-
                     if (usernameExists) {
                         // If the Username exists
-                        Toast.makeText(SignUpScreen.this, "Username already exists", Toast.LENGTH_LONG).show();
-                        userName.setError("The Username is already in use");
+
+
+                        new MaterialAlertDialogBuilder(SignUpScreen.this).setTitle("Username already exists").setMessage("The Username is already in use").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // User clicked OK button
+                                    }
+                                })
+
+                                .show();
+
+
+
+
                     } else if (emailExists) {
-                        // If the email exists,
-                        Toast.makeText(SignUpScreen.this, "The email already exists", Toast.LENGTH_LONG).show();
-                        email.setError("The email already exists");
+                        // If the email exists
+                        new MaterialAlertDialogBuilder(SignUpScreen.this).setTitle("Email already exists").setMessage("The email is already in use").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // User clicked OK button
+                                    }
+                                })
+
+                                .show();
                     } else {
-                        // if the Username or email does not exist insert the user
+                        // If the Username or email does not exist, insert the user
                         insertStatus = dbHelper.InsertUser(user);
                         // Check the insertion status and show appropriate messages
                         if (insertStatus) {
@@ -109,23 +124,15 @@ public class SignUpScreen extends AppCompatActivity {
                             Toast.makeText(SignUpScreen.this, "Error", Toast.LENGTH_LONG).show();
                         }
                     }
-
-
-
-
-
-
                 }
             }
         });
-
-
     }
 
     // Validate user input fields
     private boolean validateInput() {
         if (userName.getText().toString().trim().isEmpty()) {
-            userName.setError("This field  requires your attention");
+            userName.setError("This field requires your attention");
             return false;
         }
 
@@ -137,18 +144,18 @@ public class SignUpScreen extends AppCompatActivity {
             email.setError("Invalid email format");
             return false;
         }
+
         if (password.getText().toString().trim().isEmpty()) {
-            password.setError("This field  requires your attention");
+            password.setError("This field requires your attention");
             return false;
         }
-        if (!password.getText().toString().trim().equals(cPassword.getText().toString().trim()) ) {
+
+        if (!password.getText().toString().trim().equals(cPassword.getText().toString().trim())) {
             cPassword.setError("Passwords don't match");
             password.setError("Passwords don't match");
             return false;
         }
+
         return true; // All input fields are valid
     }
 }
-
-
-

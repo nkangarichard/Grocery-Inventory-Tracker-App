@@ -5,15 +5,19 @@ public class Stock {
     private int stockId;
     private String stockName;
     private int quantity;
-    private double price;
+    private float price;
     private boolean taxable;
 
     // Constructor
-    public Stock(String stockName, int quantity, double price, boolean taxable) {
+    public Stock(String stockName, int quantity, float price, boolean taxable) {
         this.stockName = stockName;
         this.quantity = quantity;
         this.price = price;
         this.taxable = taxable;
+    }
+
+    public Stock() {
+
     }
 
     // Getter and Setter methods
@@ -46,7 +50,7 @@ public class Stock {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

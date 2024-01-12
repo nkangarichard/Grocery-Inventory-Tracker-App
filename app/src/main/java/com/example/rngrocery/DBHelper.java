@@ -5,11 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -404,13 +400,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-
-
-
-
-
-
-
     public boolean insertPurchase(Purchase purchase) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -418,7 +407,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         cv.put(COL_ITEM_CODE, purchase.getItemCode());
         cv.put(COL_QTY_PURCHASED, purchase.getQtyPurchased());
-        cv.put(COL_DATE_PURCHASE, purchase.getDateOfPurchase().getTime()); // Assuming dateOfPurchase is a Date object
+        cv.put(COL_DATE_PURCHASE, purchase.getDateOfPurchase().getTime()); // Assuming dateOfPurchase is a Date object .getTime())
 
 
         // Convert boolean to integer representation
@@ -438,10 +427,10 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-        // Get the current quantity in the Stock table
+//        // Get the current quantity in the Stock table
         int currentQuantity = getStockQuantity(itemCode);
-
-        // Define the new quantity after the sale
+//
+//        // Define the new quantity after the sale
         int newQuantity = currentQuantity + purchaseQuantity;
 
         // Create content values to store the new quantity
@@ -471,6 +460,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+    // Method to retrieve all Employee records from the database
+    public Cursor readStockList() {
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor cursorObj;
+        cursorObj=db.rawQuery("select * from " + TABLE_STOCK, null);
+        if(cursorObj != null) {
+            cursorObj.moveToFirst();
+        }
+        return cursorObj;
+    } // End of readEmployees method
 
 
 
@@ -479,6 +478,61 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Stock searchStockById(int itemCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Stock stock = null;
+
+        String[] projection = {COL_ITEM_CODE, COL_ITEM_NAME, COL_QTY_STOCK, COL_PRICE, COL_TAXABLE};
+        String selection = COL_ITEM_CODE + " = ?";
+        String[] selectionArgs = {String.valueOf(itemCode)};
+
+        Cursor cursor = db.query(
+                TABLE_STOCK,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+
+
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int stockId = cursor.getInt(cursor.getColumnIndexOrThrow(COL_ITEM_CODE));
+            String stockName = cursor.getString(cursor.getColumnIndexOrThrow(COL_ITEM_NAME));
+            int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(COL_QTY_STOCK));
+            float price = cursor.getFloat(cursor.getColumnIndexOrThrow(COL_PRICE));
+            boolean taxable = cursor.getInt(cursor.getColumnIndexOrThrow(COL_TAXABLE)) == 1;
+
+            // Create a Stock object without stockId
+            stock = new Stock(stockName, quantity, price, taxable);
+
+
+
+
+
+        }
+
+
+
+        return stock;
+    }
 
 }
 

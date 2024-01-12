@@ -100,7 +100,7 @@ public class SalesFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        fragmentSalesBinding = fragmentSalesBinding.inflate(inflater, container, false);
+        fragmentSalesBinding = FragmentSalesBinding.inflate(inflater, container, false);
         View view = fragmentSalesBinding.getRoot();
         init();
         return view;
@@ -142,149 +142,7 @@ public class SalesFragment extends Fragment implements View.OnClickListener {
             startActivity(intent);
 
 
-        } else if (validateInput()) {
-            if (v.getId() == submit.getId()) {
-
-
-//                Integer sItemCode = Integer.parseInt(itemCode.getText().toString());
-//                String sCustomerName = csName.getText().toString();
-//                String sCustomerEmail = csEmail.getText().toString();
-//                Integer sQuantity = Integer.parseInt(quantity.getText().toString());
-
-//                SimpleDateFormat dateFormat = new SimpleDateFormat(String.valueOf(date));
-
-
-
-//
-//                String dateString = date.getText().toString(); // Replace this with your actual date string
-//                SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-//                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
-//
-//                try {
-//                    Date date = inputFormat.parse(dateString);
-//                    String formattedDate = outputFormat.format(date);
-//                    System.out.println("Original String: " + dateString);
-//                    System.out.println("Formatted Date: " + formattedDate);
-//                    System.out.println("Raw Date: " + date);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                    // Handle the parsing exception if needed
-//                }
-
-
-                // Your input string representing a date
-                String dateString = "10/12/2023";
-
-                // Define the format of the input string
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-                try {
-                    // Parse the input string into a Date object
-                    Date date = dateFormat.parse(dateString);
-
-                    // Now, 'date' contains the parsed Date object
-                    System.out.println("Original String: " + dateString);
-                    System.out.println("Parsed Date: " + date);
-
-                    // If you want to store the Date object in a database or elsewhere, you can do so
-                    // For example, if you have a class 'Sales' with a Date field
-
-
-                    // Now 'sales' object has the Date field set
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    // Handle the parsing exception if needed
-                }
-
-
-
-
-//
-//
-//
-//
-//                int itemCodeFromSales = sItemCode;
-//                boolean existsInStock = dbHelper.isItemCodeExistsInStock(itemCodeFromSales);
-//
-//                Sales sales = new Sales(sItemCode, sCustomerName, sCustomerEmail, sQuantity, testDate);
-//
-//
-//                int AvailableQuantity = dbHelper.getStockQuantity(sItemCode);
-//
-//
-//                if (existsInStock) {
-//                    if (sQuantity > AvailableQuantity+1) {
-//                    new MaterialAlertDialogBuilder(requireActivity()).setTitle("Transaction Failed").setMessage("Requested quantity of " + sQuantity + " is greater than the available quantity of " + AvailableQuantity).setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    // User clicked OK button
-//                                }
-//                            })
-//
-//                            .show();
-//                    }else {
-//                        boolean recordSale = dbHelper.salesRecord(sItemCode, sQuantity);
-//
-//                        if (recordSale){
-//                           if(validateInput()){
-//                               insertStatus = dbHelper.insertSale(sales);
-//                               if(insertStatus){
-//
-//                                   new MaterialAlertDialogBuilder(requireActivity()).setTitle("Sale Successful").setMessage("Item successfully sold.").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-//                                               @Override
-//                                               public void onClick(DialogInterface dialog, int which) {
-//                                                   // User clicked OK button
-//                                               }
-//                                           })
-//
-//                                           .show();
-//
-//                               }else {
-//                                   new MaterialAlertDialogBuilder(requireActivity()).setTitle("Failed").setMessage("Purchase Failed.").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-//                                               @Override
-//                                               public void onClick(DialogInterface dialog, int which) {
-//                                                   // User clicked OK button
-//                                               }
-//                                           })
-//
-//                                           .show();
-//                               }
-//                           }else {
-//                               new MaterialAlertDialogBuilder(requireActivity()).setTitle("Validation Error").setMessage("There is an issue with one of the input fields.").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-//                                           @Override
-//                                           public void onClick(DialogInterface dialog, int which) {
-//                                               // User clicked OK button
-//                                           }
-//                                       })
-//
-//                                       .show();
-//                           }
-//                        }
-//
-//
-//                    }
-//
-//
-//
-//
-//
-//                } else {
-//
-//                    new MaterialAlertDialogBuilder(requireActivity()).setTitle("Item Not Found").setMessage("The item does not exist").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    // User clicked OK button
-//                                }
-//                            })
-//
-//                            .show();
-//
-
-
-//            }
-
-
-        } else if (v.getId() == date.getId()) {
+        }       else if (v.getId() == date.getId()) {
             // Show a date picker dialog
             Calendar cal = Calendar.getInstance();
             int dayOfSales = cal.get(Calendar.DAY_OF_MONTH);
@@ -302,6 +160,116 @@ public class SalesFragment extends Fragment implements View.OnClickListener {
             datePicker.show();
 
         }
+
+
+
+        else if (validateInput()) {
+            if (v.getId() == submit.getId()) {
+
+
+                Integer sItemCode = Integer.parseInt(itemCode.getText().toString());
+                String sCustomerName = csName.getText().toString();
+                String sCustomerEmail = csEmail.getText().toString();
+                Integer sQuantity = Integer.parseInt(quantity.getText().toString());
+
+                String userInput = date.getText().toString();
+                String inputDateFormat = "dd/MM/yyyy";
+
+                Date sDate = null;
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat(inputDateFormat);
+                    Date parsedDate = sdf.parse(userInput);
+                    sDate = parsedDate;
+                    Date date = new Date(userInput);
+                    System.out.println("Date:" + date);
+                } catch (ParseException e) {
+                    System.out.println("Error parsing the date. Please use the format: " + inputDateFormat);
+                }
+
+
+
+
+
+                int itemCodeFromSales = sItemCode;
+                boolean existsInStock = dbHelper.isItemCodeExistsInStock(itemCodeFromSales);
+
+                Sales sales = new Sales(sItemCode, sCustomerName, sCustomerEmail, sQuantity, sDate);
+
+
+                int AvailableQuantity = dbHelper.getStockQuantity(sItemCode);
+
+
+                if (existsInStock) {
+                    if (sQuantity > AvailableQuantity + 1) {
+                        new MaterialAlertDialogBuilder(requireActivity()).setTitle("Transaction Failed").setMessage("Requested quantity of " + sQuantity + " is greater than the available quantity of " + AvailableQuantity).setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // User clicked OK button
+                                    }
+                                })
+
+                                .show();
+                    } else {
+                        boolean recordSale = dbHelper.salesRecord(sItemCode, sQuantity);
+
+                        if (recordSale) {
+                            if (validateInput()) {
+                                insertStatus = dbHelper.insertSale(sales);
+                                if (insertStatus) {
+
+                                    new MaterialAlertDialogBuilder(requireActivity()).setTitle("Sale Successful").setMessage("Item successfully sold.").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // User clicked OK button
+                                                }
+                                            })
+
+                                            .show();
+
+                                } else {
+                                    new MaterialAlertDialogBuilder(requireActivity()).setTitle("Failed").setMessage("Purchase Failed.").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // User clicked OK button
+                                                }
+                                            })
+
+                                            .show();
+                                }
+                            } else {
+                                new MaterialAlertDialogBuilder(requireActivity()).setTitle("Validation Error").setMessage("There is an issue with one of the input fields.").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // User clicked OK button
+                                            }
+                                        })
+
+                                        .show();
+                            }
+                        }
+
+
+                    }
+
+                } else {
+
+                    new MaterialAlertDialogBuilder(requireActivity()).setTitle("Item Not Found").setMessage("The item does not exist").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // User clicked OK button
+                                }
+                            })
+
+                            .show();
+
+
+                }
+
+
+            }
+
+
+
     }  else
 
     {
@@ -335,43 +303,57 @@ public class SalesFragment extends Fragment implements View.OnClickListener {
 
 
 
-
     private boolean validateInput() {
+        String itemCodeStr = itemCode.getText().toString().trim();
+        if (itemCodeStr.isEmpty()) {
+            itemCode.setError("Enter the item code");
+            return false;
+        }
 
-//
-//        String itemCodeStr = itemCode.getText().toString().trim();
-//        if (itemCodeStr.isEmpty()) {
-//            itemCode.setError("Enter the item code");
-//            return false;
-//        }
-//
-//        try {
-//            int quantityValue = Integer.parseInt(itemCodeStr);
-//            // Quantity is a valid integer
-//        } catch (NumberFormatException e) {
-//            itemCode.setError("Enter a valid item code (numeric)");
-//            return false;
-//        }
-//
-//
-//
-//        if (csName.getText().toString().trim().isEmpty()) {
-//            csName.setError("Enter the name of the customer");
-//            return false;
-//        }
-//
-//        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-//        if (csEmail.getText().toString().trim().isEmpty()) {
-//            csEmail.setError("Email is required");
-//            return false;
-//        } else if (!csEmail.getText().toString().trim().matches(emailPattern)) {
-//            csEmail.setError("Invalid email format");
-//            return false;
-//        }
+        try {
+            int quantityValue = Integer.parseInt(itemCodeStr);
+            // Quantity is a valid integer
+        } catch (NumberFormatException e) {
+            itemCode.setError("Enter a valid item code (numeric)");
+            return false;
+        }
 
+        if (csName.getText().toString().trim().isEmpty()) {
+            csName.setError("Enter the name of the customer");
+            return false;
+        }
 
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if (csEmail.getText().toString().trim().isEmpty()) {
+            csEmail.setError("Email is required");
+            return false;
+        } else if (!csEmail.getText().toString().trim().matches(emailPattern)) {
+            csEmail.setError("Invalid email format");
+            return false;
+        }
 
+        String inputDateFormat = "dd/MM/yyyy";
+        String dateStr = date.getText().toString().trim();
+
+        if (dateStr.isEmpty()) {
+            date.setError("Enter a valid date (format: " + inputDateFormat + ")");
+            return false;
+        }
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(inputDateFormat, Locale.getDefault());
+            Date parsedDate = sdf.parse(dateStr);
+
+            if (parsedDate != null && parsedDate.after(new Date())) {
+                date.setError("Cannot select a future date");
+                return false;
+            }
+        } catch (ParseException e) {
+            date.setError("Enter a valid date (format: " + inputDateFormat + ")");
+            return false;
+        }
 
         return true; // All input fields are valid
     }
+
 }
